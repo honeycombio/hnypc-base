@@ -1,19 +1,15 @@
 # Input variables for Route53 hosted zone configuration
 
-variable "create_route53_zone" {
-  type        = bool
-  default     = true
-  description = <<DOC
-Set to false to skip creating the route53 zone.
-
-HnyPC requires a Route53 hosted zone to function. Set this to false if you plan
-on provisioning a hosted zone out-of-band.
-DOC
-}
-
 variable "dns_zone_name" {
-  description = "The DNS zone name for the Route53 hosted zone (e.g., 'example.com')"
+  description = <<DOC
+The DNS zone name for the Route53 hosted zone (e.g., 'example.com').
+
+Set to null to skip creating the Route53 zone. HnyPC requires a Route53 hosted
+zone to function, so set this to null only if you plan on provisioning a hosted
+zone out-of-band.
+DOC
   type        = string
+  default     = null
 }
 
 variable "state_bucket_name" {
