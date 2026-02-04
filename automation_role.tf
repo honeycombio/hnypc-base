@@ -28,10 +28,16 @@ resource "aws_iam_role_policy" "infra_automation_releases_bucket" {
 }
 
 data "aws_iam_policy_document" "infra_automation_ecr" {
+  # GetAuthorizationToken doesn't support resource-level permissions
+  statement {
+    effect    = "Allow"
+    actions   = ["ecr:GetAuthorizationToken"]
+    resources = ["*"]
+  }
+
   statement {
     effect = "Allow"
     actions = [
-      "ecr:GetAuthorizationToken",
       "ecr:BatchGetImage",
       "ecr:GetDownloadUrlForLayer",
       "ecr:BatchImportUpstreamImage",
