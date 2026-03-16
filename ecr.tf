@@ -4,6 +4,7 @@ locals {
     "terraform-modules/infra",
     # Tooling we'll need to bootstrap the instance
     "tenant/upgrade-manager",
+    "tenant/hnypc-upgrade",
   ]
 }
 
