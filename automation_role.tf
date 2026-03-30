@@ -1,6 +1,9 @@
-# Create the hnypc-infra-automation role for infra-automation-go to use
-# This role only needs S3 access to the releases bucket
-# The full hnypc-automation role (for pods) is created in env-single-tenant
+# The hnypc-infra-automation role is used by hnypc-upgrade for bootstrap
+# operations (version tracking, release resolution, TF module vendoring).
+# The full hnypc-automation role (for app install) is created in env-single-tenant.
+
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
 
 resource "aws_iam_role" "infra_automation" {
   name               = "${var.hnypc_prefix}-infra-automation"
@@ -50,5 +53,25 @@ data "aws_iam_policy_document" "infra_automation_ecr" {
 resource "aws_iam_role_policy" "infra_automation_ecr" {
   role   = aws_iam_role.infra_automation.name
   policy = data.aws_iam_policy_document.infra_automation_ecr.json
+}
+
+data "aws_iam_policy_document" "infra_automation_version_tracking" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "ssm:GetParameter",
+      "ssm:PutParameter",
+      "ssm:DeleteParameter",
+    ]
+    resources = [
+      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/current-version",
+      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/active-breakpoint",
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "infra_automation_version_tracking" {
+  role   = aws_iam_role.infra_automation.name
+  policy = data.aws_iam_policy_document.infra_automation_version_tracking.json
 }
 
