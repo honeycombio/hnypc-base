@@ -46,7 +46,11 @@ data "aws_iam_policy_document" "infra_automation_ecr" {
       "ecr:BatchImportUpstreamImage",
     ]
 
-    resources = [for repo in aws_ecr_repository.this : repo.arn]
+    # Any repo in the account: the bootstrap flow pull-through-imports images
+    # whose repositories are created later (in env-single-tenant).
+    resources = [
+      "arn:aws:ecr:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:repository/*",
+    ]
   }
 }
 
