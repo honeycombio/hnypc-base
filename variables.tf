@@ -38,3 +38,9 @@ https://aws.amazon.com/blogs/security/how-to-use-trust-policies-with-iam-roles/
 DOC
 }
 
+variable "additional_infra_automation_ecr_repos" {
+  description = "Names of ECR repositories, created outside this module, that the infra-automation role may pull and pull-through-import beyond the bootstrap repos created here."
+  type        = list(string)
+  default     = []
+}
+
