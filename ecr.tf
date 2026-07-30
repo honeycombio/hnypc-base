@@ -27,8 +27,9 @@ data "aws_iam_policy_document" "ptc_trust_policy" {
 }
 
 resource "aws_iam_role" "pull_through_cache" {
-  name               = "${var.hnypc_prefix}-pull-through-cache"
-  assume_role_policy = data.aws_iam_policy_document.ptc_trust_policy.json
+  name                 = "${var.hnypc_prefix}-pull-through-cache"
+  assume_role_policy   = data.aws_iam_policy_document.ptc_trust_policy.json
+  permissions_boundary = var.pull_through_cache_role_permissions_boundary_arn
 }
 
 data "aws_iam_policy_document" "pull_through_cache" {

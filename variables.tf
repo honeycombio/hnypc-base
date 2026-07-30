@@ -38,3 +38,29 @@ https://aws.amazon.com/blogs/security/how-to-use-trust-policies-with-iam-roles/
 DOC
 }
 
+variable "infra_automation_role_permissions_boundary_arn" {
+  type        = string
+  description = <<DOC
+ARN of the IAM policy to attach as a permissions boundary on the
+infra-automation IAM role.
+
+Set to null to create the role without a permissions boundary.
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
+DOC
+  default     = null
+}
+
+variable "pull_through_cache_role_permissions_boundary_arn" {
+  type        = string
+  description = <<DOC
+ARN of the IAM policy to attach as a permissions boundary on the ECR
+pull-through-cache IAM role.
+
+Set to null to create the role without a permissions boundary.
+
+https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_boundaries.html
+DOC
+  default     = null
+}
+

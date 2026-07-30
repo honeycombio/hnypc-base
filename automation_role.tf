@@ -6,8 +6,9 @@ data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
 resource "aws_iam_role" "infra_automation" {
-  name               = "${var.hnypc_prefix}-infra-automation"
-  assume_role_policy = var.infra_automation_role_trust_policy_json
+  name                 = "${var.hnypc_prefix}-infra-automation"
+  assume_role_policy   = var.infra_automation_role_trust_policy_json
+  permissions_boundary = var.infra_automation_role_permissions_boundary_arn
 }
 
 # Cross-account access to hnypc-artifacts releases bucket
