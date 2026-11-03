@@ -71,18 +71,6 @@ data "aws_iam_policy_document" "infra_automation_version_tracking" {
     resources = [
       "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/current-version",
       "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/active-breakpoint",
-    ]
-  }
-
-  # The config revision is informational and never deleted, so it gets no
-  # DeleteParameter.
-  statement {
-    effect = "Allow"
-    actions = [
-      "ssm:GetParameter",
-      "ssm:PutParameter",
-    ]
-    resources = [
       "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/config-revision",
     ]
   }
