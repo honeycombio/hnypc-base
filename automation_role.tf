@@ -71,6 +71,7 @@ data "aws_iam_policy_document" "infra_automation_version_tracking" {
     resources = [
       "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/current-version",
       "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/active-breakpoint",
+      "arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.hnypc_prefix}/config-revision",
     ]
   }
 }
